@@ -66,7 +66,7 @@
             android:gravity="center"
             android:text="@string/gastosTotais"
             android:textColor="@color/padraoTexto"
-            android:textSize="25sp"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
