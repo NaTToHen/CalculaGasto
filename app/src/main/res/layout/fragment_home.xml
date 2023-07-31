@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/verde"
+    tools:context=".ui.home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/passion_one"
+            android:gravity="center"
+            android:text="@string/hello"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
+            app:layout_constraintEnd_toStartOf="@id/nome_usuario"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nome_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/passion_one"
+            android:gravity="center"
+            android:text="Henrique"
+            android:textColor="@color/verdeEscuro"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
+            app:layout_constraintStart_toEndOf="@+id/hello"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fundoPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="700dp"
+        android:background="@drawable/fundoinicio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/totalGasto"
+            android:fontFamily="@font/passion_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/gastosTotais"
+            android:textColor="@color/padraoTexto"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.db.williamchart.view.BarChartView
+            android:id="@+id/barChartMeses"
+            android:layout_width="0dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"
+            app:chart_axis="x"
+            app:chart_barsColor="#00A124"
+            app:chart_barsRadius="4dp"
+            app:chart_labelsColor="@color/padraoTexto"
+            app:chart_labelsSize="10sp"
+            app:chart_spacing="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/totalGasto" />
+
+        <Button
+            android:id="@+id/btn_mesAtual"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="66dp"
+            android:backgroundTint="@color/verde"
+            android:fontFamily="@font/passion_one"
+            android:text="Editar mês atual"
+            android:textColor="@color/verdeEscuro"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/btnPerfil"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barChartMeses" />
+
+        <Button
+            android:id="@+id/btnPerfil"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="60dp"
+            android:backgroundTint="@color/verde"
+            android:fontFamily="@font/passion_one"
+            android:text="Meu Perfil"
+            android:textColor="@color/verdeEscuro"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_mesAtual"
+            app:layout_constraintTop_toBottomOf="@+id/barChartMeses" />
+
+        <Button
+            android:id="@+id/btnConfig"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:backgroundTint="@color/verde"
+            android:fontFamily="@font/passion_one"
+            android:text="Configurações"
+            android:textColor="@color/verdeEscuro"
+            android:textSize="20sp"
+            android:layout_marginTop="35dp"
+            app:layout_constraintEnd_toEndOf="@+id/btn_mesAtual"
+            app:layout_constraintStart_toStartOf="@+id/btn_mesAtual"
+            app:layout_constraintTop_toBottomOf="@+id/btn_mesAtual" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
