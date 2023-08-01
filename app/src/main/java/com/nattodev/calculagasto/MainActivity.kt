@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
         getSupportActionBar()?.setTitle("")
 
-        /*binding.appBarMain.fab.setOnClickListener { view ->
+        binding.appBarMain.toolbar.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-        }*/
+        }
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
