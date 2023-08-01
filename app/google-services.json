@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "579280875468",
+    "project_id": "calculagasto-8dc28",
+    "storage_bucket": "calculagasto-8dc28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579280875468:android:9610fa5199d134e68ff769",
+        "android_client_info": {
+          "package_name": "com.nattodev.calculagasto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579280875468-p8c8gbnns4f2bdka37jvhnt0mmcij7f0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nattodev.calculagasto",
+            "certificate_hash": "4952ee80d62eae8141607c9a9d2d998f6fad1b99"
+          }
+        },
+        {
+          "client_id": "579280875468-5ma5f2rkvfv3htqsd82lilkgnhqn7t89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvO3acKFpGWy7F50voYJr8CuuQRa-Ua0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579280875468-5ma5f2rkvfv3htqsd82lilkgnhqn7t89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

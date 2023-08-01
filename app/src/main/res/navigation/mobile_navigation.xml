@@ -12,11 +12,11 @@
 
     <fragment
         android:id="@+id/nav_meses"
-        android:name="com.nattodev.calculagasto.ui.gallery.GalleryFragment"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.nattodev.calculagasto.ui.meses.MesesFragment"
+        tools:layout="@layout/fragment_meses" />
 
     <fragment
         android:id="@+id/nav_config"
-        android:name="com.nattodev.calculagasto.ui.slideshow.SlideshowFragment"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.nattodev.calculagasto.ui.configuracoes.ConfigFragment"
+        tools:layout="@layout/fragment_config" />
 </navigation>

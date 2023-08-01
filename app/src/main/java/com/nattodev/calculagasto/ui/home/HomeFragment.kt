@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
             return root
     }
     companion object {
+
         private val barSet = listOf(
             "JAN" to 4F,
             "FEV" to 8F,

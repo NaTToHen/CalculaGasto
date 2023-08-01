@@ -16,4 +16,9 @@
     <string name="menuConfig">Configurações</string>
     <string name="hello">Olá</string>
     <string name="gastosTotais">Gastos anuais: R$ 8.340,45</string>
+    <string name="exit_app">Sair</string>
+
+    <string name="senha_login">Senha</string>
+    <string name="naoPossuiConta">Não possui uma conta? Cadastre-se</string>
+    <string name="textoBtnLogin">Entrar</string>
 </resources>

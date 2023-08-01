@@ -1,4 +1,4 @@
-package com.nattodev.calculagasto.ui.gallery
+package com.nattodev.calculagasto.ui.meses
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.nattodev.calculagasto.databinding.FragmentGalleryBinding
+import com.nattodev.calculagasto.databinding.FragmentMesesBinding
 
-class GalleryFragment : Fragment() {
+class MesesFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentMesesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
+        val mesesViewModel =
+            ViewModelProvider(this).get(MesesViewModel::class.java)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentMesesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
+        mesesViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
