@@ -77,7 +77,7 @@
 
     <Button
         android:id="@+id/btnLogar"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/verdeEscuro"

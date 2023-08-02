@@ -2,11 +2,14 @@ package com.nattodev.calculagasto.loginCadastro
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -33,15 +36,59 @@ class CadastroActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.btnCadastrar.setOnClickListener {
+        binding.btnCadastrar.setOnClickListener { view ->
             val email = binding.editEmail.text.toString()
             val senha = binding.editSenha.text.toString()
             val confirm = binding.editConfirmaSenha.text.toString().trim()
 
             if(senha === confirm && !email.isEmpty() || !senha.isEmpty() || !confirm.isEmpty()) {
-                createAccount(email, senha)
+                if(senha.length < 6) {
+                    val snackbar = Snackbar.make(
+                        view,
+                        "A senha deve ter mais de 6 caracteres",
+                        Snackbar.LENGTH_LONG
+                    )
+                    snackbar.setBackgroundTint(Color.RED)
+                    snackbar.show()
+                } else {
+                    auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "createUserWithEmail:success")
+                                val user = auth.currentUser
+
+                                val snackbar = Snackbar.make(
+                                    view,
+                                    "Cadastro realizado com sucesso",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                snackbar.setBackgroundTint(Color.GREEN)
+                                snackbar.show()
+
+                                updateUI(user)
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                //Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                val snackbar = Snackbar.make(
+                                    view,
+                                    "preencha os campos corretamente",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                snackbar.setBackgroundTint(Color.RED)
+                                snackbar.show()
+
+                                binding.editSenha.setText("")
+                                binding.editConfirmaSenha.setText("")
+
+                                updateUI(null)
+                            }
+                        }
+                }
             } else {
-                Toast.makeText(baseContext, "Preencha os campos", Toast.LENGTH_SHORT).show()
+                val snackbar = Snackbar.make(view, "preencha todos os campos", Snackbar.LENGTH_LONG)
+                snackbar.setBackgroundTint(Color.RED)
+                snackbar.show()
+
                 binding.editSenha.setText("")
                 binding.editConfirmaSenha.setText("")
             }
@@ -58,35 +105,11 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
-    private fun createAccount(email: String, password: String) {
-        // [START create_user_with_email]
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    Toast.makeText(baseContext, "Cadastrado corretamente", Toast.LENGTH_SHORT).show()
-                    updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    //Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Preencha os campos corretamente", Toast.LENGTH_SHORT).show()
-                    binding.editSenha.setText("")
-                    binding.editConfirmaSenha.setText("")
-                    updateUI(null)
-                }
-            }
-    }
-
     private fun updateUI(user: FirebaseUser?) {
         if(user != null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
-    }
-
-    companion object {
-        private const val TAG = "EmailPassword"
     }
 }

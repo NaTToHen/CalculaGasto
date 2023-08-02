@@ -2,6 +2,7 @@ package com.nattodev.calculagasto.loginCadastro
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Email
@@ -30,10 +31,37 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
         supportActionBar?.hide()
 
-        binding.btnLogar.setOnClickListener {
+        binding.btnLogar.setOnClickListener { view ->
             val EmailUsuario = binding.editEmail.text.toString()
             val SenhaUsuario = binding.editSenha.text.toString()
-            signIn(EmailUsuario, SenhaUsuario)
+            if(EmailUsuario.isEmpty() || SenhaUsuario.isEmpty()) {
+                val snackbar = Snackbar.make(view, "Preencha os campos", Snackbar.LENGTH_LONG)
+                snackbar.setBackgroundTint(Color.RED)
+                snackbar.show()
+            } else {
+                auth.signInWithEmailAndPassword(EmailUsuario, SenhaUsuario).addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "signInWithEmail:success")
+
+                        val user = auth.currentUser
+
+                        updateUI(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+
+                        val snackbar = Snackbar.make(view, "preencha os campos corretamente", Snackbar.LENGTH_LONG)
+                        snackbar.setBackgroundTint(Color.RED)
+                        snackbar.show()
+
+                        updateUI(null)
+
+                        binding.editEmail.setText("")
+                        binding.editSenha.setText("")
+                    }
+                }
+            }
+            //signIn(EmailUsuario, SenhaUsuario)
         }
         binding.btnCadastro.setOnClickListener {
             val intent = Intent(this, CadastroActivity::class.java)
@@ -55,25 +83,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signIn(email:String, password:String) {
-        if(email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(baseContext, "preencha os campos corretamente", Toast.LENGTH_SHORT,).show()
-        } else {
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "signInWithEmail:success")
-                        val user = auth.currentUser
-                        updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "preencha os campos corretamente", Toast.LENGTH_SHORT,).show()
-                        updateUI(null)
-                        binding.editEmail.setText("")
-                        binding.editEmail.isFocused
-                        binding.editSenha.setText("")
-                    }
-                }
-        }
+
     }
 
     private fun updateUI(user: FirebaseUser?) {

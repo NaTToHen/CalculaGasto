@@ -1,5 +1,6 @@
 package com.nattodev.calculagasto
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -12,7 +13,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.databinding.ActivityMainBinding
+import com.nattodev.calculagasto.loginCadastro.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +39,13 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
+        binding.appBarMain.btnSair.setOnClickListener {
+            Firebase.auth.signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
 
@@ -47,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

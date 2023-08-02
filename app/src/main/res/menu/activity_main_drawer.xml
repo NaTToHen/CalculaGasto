@@ -16,9 +16,5 @@
             android:id="@+id/nav_config"
             android:icon="@drawable/menuconfig"
             android:title="@string/menuConfig" />
-        <item
-            android:id="@+id/label_one"
-            android:icon="@drawable/baseline_exit_to_app_24"
-            android:title="@string/exit_app" />
     </group>
 </menu>
