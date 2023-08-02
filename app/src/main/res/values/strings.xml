@@ -21,4 +21,9 @@
     <string name="senha_login">Senha</string>
     <string name="naoPossuiConta">Não possui uma conta? Cadastre-se</string>
     <string name="textoBtnLogin">Entrar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="desconectarDialog">desconectar</string>
+    <string name="desconectarCancelar">Cancelar</string>
+    <string name="desconectarSair">Sair</string>
 </resources>

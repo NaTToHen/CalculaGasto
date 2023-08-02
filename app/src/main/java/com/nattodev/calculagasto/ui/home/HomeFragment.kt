@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private val db = FirebaseFirestore.getInstance()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -21,6 +25,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View {
+
+            mostraDadosUsuario()
+
             val homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
             _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -29,7 +36,7 @@ class HomeFragment : Fragment() {
                 barChartMeses.animation.duration = animationDuration
                 barChartMeses.animate(barSet)
             }
-            return root
+        return root
     }
     companion object {
 
@@ -53,5 +60,22 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun mostraDadosUsuario() {
+
+        val userConectado = Firebase.auth.currentUser
+        userConectado?.let {
+            // Name, email address, and profile photo Url
+            val email = it.email
+
+            db.collection("Usuarios").document(email.toString()).get()
+                .addOnCompleteListener { documento ->
+                    if (documento.isSuccessful) {
+                        val nome = documento.result.get("nome").toString()
+                        binding.nomeUsuario.text = nome
+                    }
+                }
+        }
     }
 }

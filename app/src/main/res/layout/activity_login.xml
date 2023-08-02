@@ -79,7 +79,7 @@
         android:id="@+id/btnLogar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/verdeEscuro"
         android:fontFamily="@font/passion_one"
         android:text="@string/textoBtnLogin"
