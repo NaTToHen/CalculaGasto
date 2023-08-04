@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
     fun exitDialog() {
         // creating custom dialog
         val dialog = Dialog(this@MainActivity)
-
         // setting content view to dialog
         dialog.setContentView(R.layout.fragment_desconectar)
 

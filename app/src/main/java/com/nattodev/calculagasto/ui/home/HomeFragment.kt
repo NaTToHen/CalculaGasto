@@ -1,5 +1,6 @@
 package com.nattodev.calculagasto.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.databinding.FragmentHomeBinding
+import com.nattodev.calculagasto.loginCadastro.LoginActivity
 
 class HomeFragment : Fragment() {
 
@@ -36,6 +38,7 @@ class HomeFragment : Fragment() {
                 barChartMeses.animation.duration = animationDuration
                 barChartMeses.animate(barSet)
             }
+
         return root
     }
     companion object {

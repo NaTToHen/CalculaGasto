@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.databinding.ActivityCadastroBinding
+import java.util.Calendar
 
 
 class CadastroActivity : AppCompatActivity() {
@@ -45,6 +46,9 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.editSenha.text.toString().trim()
             val confirm = binding.editConfirmaSenha.text.toString().trim()
 
+            val calendario = Calendar.getInstance()
+            val ano = calendario.get(Calendar.YEAR).toString()
+
             if(senha === confirm && !email.isEmpty() || !senha.isEmpty() || !confirm.isEmpty()
                 || !valorMaximo.isEmpty() || !nome.isEmpty()) {
                 if(senha.length < 6) {
@@ -58,7 +62,7 @@ class CadastroActivity : AppCompatActivity() {
                                 Log.d(TAG, "createUserWithEmail:success")
                                 val user = auth.currentUser
 
-                                salvaUsuario(nome, email, valorMaximo, senha)
+                                salvaUsuario(nome, email, valorMaximo, senha, ano)
 
                                 val snackbar = Snackbar.make(view, "Cadastro realizado com sucesso", Snackbar.LENGTH_LONG)
                                 snackbar.setBackgroundTint(Color.GREEN)
@@ -98,12 +102,25 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
-    private fun salvaUsuario(nome:String, email:String, valorMaximo:String, senha:String) {
+    private fun salvaUsuario(nome:String, email:String, valorMaximo:String, senha:String, ano:String) {
         val mapUsuarios = hashMapOf(
             "nome" to nome,
             "email" to email,
             "valorMaximo" to valorMaximo,
-            "senha" to senha
+            "senha" to senha,
+            "anoAtual" to ano,
+            "janeiro" to 0,
+            "fevereiro" to 0,
+            "marco" to 0,
+            "abril" to 0,
+            "maio" to 0,
+            "junho" to 0,
+            "julho" to 0,
+            "agosto" to 0,
+            "setembro" to 0,
+            "outubro" to 0,
+            "novembro" to 0,
+            "dezembro" to 0
         )
 
         db.collection("Usuarios").document(email).set(mapUsuarios)

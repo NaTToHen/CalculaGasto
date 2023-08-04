@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nattodev.calculagasto.databinding.FragmentMesesBinding
+import com.nattodev.calculagasto.ui.meses.adapter.AdapterMes
+import com.nattodev.calculagasto.ui.meses.model.Mes
 
 class MesesFragment : Fragment() {
 
@@ -22,16 +25,19 @@ class MesesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val mesesViewModel =
-            ViewModelProvider(this).get(MesesViewModel::class.java)
+        //val mesesViewModel =
+        //ViewModelProvider(this).get(MesesViewModel::class.java)
 
         _binding = FragmentMesesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        mesesViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val listaMeses = binding.listaMeses
+        listaMeses.layoutManager = LinearLayoutManager(requireContext())
+        listaMeses.setHasFixedSize(true)
+
+
+
+
         return root
     }
 
