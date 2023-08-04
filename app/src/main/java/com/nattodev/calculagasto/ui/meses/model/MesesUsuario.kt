@@ -1,5 +1,6 @@
 package com.nattodev.calculagasto.ui.meses.model
 
-class MesesUsuario {
-    val
-}
+data class MesesUsuario(
+    val key: String? = null,
+    var value: Float? = null
+)

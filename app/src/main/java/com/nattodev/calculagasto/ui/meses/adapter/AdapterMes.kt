@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.ui.meses.model.MesesUsuario
 
-class AdapterMes(private val context: Context, private val listaMeses: ArrayList<MesesUsuario>): RecyclerView.Adapter<AdapterMes.MesViewHolder>() {
+class AdapterMes(val context: Context, val listaMeses: ArrayList<MesesUsuario>): RecyclerView.Adapter<AdapterMes.MesViewHolder>() {
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -30,10 +29,13 @@ class AdapterMes(private val context: Context, private val listaMeses: ArrayList
     override fun getItemCount(): Int = listaMeses.size
 
     override fun onBindViewHolder(holder: MesViewHolder, position: Int) {
-        holder.mes.text = listaMeses[position].mes
-        holder.valorTotalMes.text = listaMeses[position].valorTotalDoMes.toString()
-        holder.btnEditarMes.setOnClickListener {
+        val mes: MesesUsuario = listaMeses[position]
+        val primeira = mes.key?.first()?.uppercase()
+        holder.mes.text = "$primeira${mes.key?.substring(1)}"
+        holder.valorTotalMes.text = "Total: R$${mes.value.toString()}"
 
+        holder.btnEditarMes.setOnClickListener {
+            Toast.makeText(context, "${mes.key}", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/fundomes"
-    android:layout_marginVertical="20dp"
-    android:padding="20dp">
+    android:layout_marginVertical="10dp"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/mesDoAno"
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/passion_one"
         android:text="Mes"
+        android:textColor="@color/padraoTexto"
         android:textSize="27sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,7 @@
         android:fontFamily="@font/passion_one"
         android:text="Valor Total: "
         android:textColor="#AAAAAA"
-        android:textSize="27sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnEditarMes"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +37,10 @@
         android:id="@+id/btnEditarMes"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:backgroundTint="@color/verde"
+        android:backgroundTint="#00B607"
         android:fontFamily="@font/passion_one"
         android:text="editar"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

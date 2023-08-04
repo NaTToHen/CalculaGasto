@@ -70,7 +70,7 @@ class CadastroActivity : AppCompatActivity() {
                                 updateUI(user)
                             } else {
                                 // If sign in fails, display a message to the user.
-                                //Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
                                 val snackbar = Snackbar.make(view, "preencha os campos corretamente", Snackbar.LENGTH_LONG)
                                 snackbar.setBackgroundTint(Color.RED)
                                 snackbar.show()
@@ -108,25 +108,31 @@ class CadastroActivity : AppCompatActivity() {
             "email" to email,
             "valorMaximo" to valorMaximo,
             "senha" to senha,
-            "anoAtual" to ano,
-            "janeiro" to 0,
-            "fevereiro" to 0,
-            "marco" to 0,
-            "abril" to 0,
-            "maio" to 0,
-            "junho" to 0,
-            "julho" to 0,
-            "agosto" to 0,
-            "setembro" to 0,
-            "outubro" to 0,
-            "novembro" to 0,
-            "dezembro" to 0
+            "anoAtual" to ano
+        )
+
+        val mapMeses = hashMapOf(
+            "janeiro" to 0.0f,
+            "fevereiro" to 0.0f,
+            "marco" to 0.0f,
+            "abril" to 0.0f,
+            "maio" to 0.0f,
+            "junho" to 0.0f,
+            "julho" to 0.0f,
+            "agosto" to 0.0f,
+            "setembro" to 0.0f,
+            "outubro" to 0.0f,
+            "novembro" to 0.0f,
+            "dezembro" to 0.0f
         )
 
         db.collection("Usuarios").document(email).set(mapUsuarios)
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {
                     Toast.makeText(applicationContext, "usuario cadastrado", Toast.LENGTH_SHORT).show()
+                    for (mes in mapMeses) {
+                        db.collection("/Usuarios/${email}/GastoMes").document(mes.key).set(mes)
+                    }
                 } else {
                     Toast.makeText(applicationContext, "Erro ao cadastrar usuario", Toast.LENGTH_SHORT).show()
                 }

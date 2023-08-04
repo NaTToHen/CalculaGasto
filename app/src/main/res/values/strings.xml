@@ -26,4 +26,5 @@
     <string name="desconectarDialog">desconectar</string>
     <string name="desconectarCancelar">Cancelar</string>
     <string name="desconectarSair">Sair</string>
+    <string name="tituloMeses">Meses</string>
 </resources>

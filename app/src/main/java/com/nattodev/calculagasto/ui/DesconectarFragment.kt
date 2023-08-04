@@ -27,8 +27,6 @@ class DesconectarFragment : Fragment() {
 
         binding.btnDeslogarConfirm.setOnClickListener {
             Firebase.auth.signOut()
-            val intent = Intent()
-            startActivity(intent)
         }
 
         return root

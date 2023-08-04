@@ -34,14 +34,34 @@ class HomeFragment : Fragment() {
                 ViewModelProvider(this).get(HomeViewModel::class.java)
             _binding = FragmentHomeBinding.inflate(inflater, container, false)
             val root: View = binding.root
-            binding.apply {
-                barChartMeses.animation.duration = animationDuration
-                barChartMeses.animate(barSet)
-            }
+
+        val barSet = mutableListOf<Pair<String,Float>>(
+            "JAN" to 0F,
+            "FEV" to 0F,
+            "MAR" to 0F,
+            "MAI" to 0F,
+            "ABR" to 0F,
+            "JUN" to 0F,
+            "JUL" to 0F,
+            "AGO" to 0F,
+            "SET" to 0F,
+            "OUT" to 0F,
+            "NOV" to 0F,
+            "DEZ" to 0F
+        )
+        val animationDuration = 1000L
+        /*for(mes in barSet) {
+            mes.second
+        }*/
+
+        binding.apply {
+            barChartMeses.animation.duration = animationDuration
+            barChartMeses.animate(barSet)
+        }
 
         return root
     }
-    companion object {
+    /*companion object {
 
         private val barSet = listOf(
             "JAN" to 4F,
@@ -58,7 +78,7 @@ class HomeFragment : Fragment() {
             "DEZ" to 4F
         )
         private const val animationDuration = 1000L
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()
