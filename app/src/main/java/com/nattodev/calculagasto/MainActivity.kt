@@ -4,7 +4,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -53,11 +55,32 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        mostraDadosHeader()
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun mostraDadosHeader() {
+        val userConectado = Firebase.auth.currentUser
+        userConectado?.let {
+            // Name, email address, and profile photo Url
+            val email = it.email
+            val headerView: View = binding.navView.getHeaderView(0)
+
+            db.collection("Usuarios").document(email.toString()).get()
+                .addOnCompleteListener { documento ->
+                    if (documento.isSuccessful) {
+                        val nome = documento.result.get("nome").toString()
+                        //val valorTotalgasto = documento.result.get("")
+                        val nomeHeader = headerView.findViewById<TextView>(R.id.nome_usuario)
+                        nomeHeader.text = nome
+                    }
+                }
+        }
     }
 
     fun exitDialog() {

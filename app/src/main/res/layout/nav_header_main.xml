@@ -7,6 +7,7 @@
     android:gravity="center"
     android:paddingHorizontal="20dp"
     android:paddingTop="60dp"
+    android:id="@+id/header_nav"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView

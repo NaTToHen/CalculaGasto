@@ -33,8 +33,6 @@ class MesesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //val mesesViewModel =
-        //ViewModelProvider(this).get(MesesViewModel::class.java)
 
         _binding = FragmentMesesBinding.inflate(inflater, container, false)
         val root: View = binding.root
