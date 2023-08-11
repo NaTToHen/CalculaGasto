@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.databinding.FragmentHomeBinding
 import com.nattodev.calculagasto.loginCadastro.LoginActivity
 
@@ -59,6 +63,10 @@ class HomeFragment : Fragment() {
             barChartMeses.animate(barSet)
         }
 
+        binding.btnConfig.setOnClickListener { view ->
+            view.findNavController().navigate(R.id.nav_config)
+        }
+
         return root
     }
     /*companion object {
@@ -96,7 +104,9 @@ class HomeFragment : Fragment() {
                 .addOnCompleteListener { documento ->
                     if (documento.isSuccessful) {
                         val nome = documento.result.get("nome").toString()
+                        val valorTotal = documento.result.get("valorTotal").toString()
                         binding.nomeUsuario.text = nome
+                        binding.totalGasto.text = "R$ $valorTotal"
                     }
                 }
         }

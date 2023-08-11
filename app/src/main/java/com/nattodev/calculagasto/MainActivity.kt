@@ -75,9 +75,13 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener { documento ->
                     if (documento.isSuccessful) {
                         val nome = documento.result.get("nome").toString()
-                        //val valorTotalgasto = documento.result.get("")
+                        val valorTotalgasto = documento.result.get("valorTotal")
+
                         val nomeHeader = headerView.findViewById<TextView>(R.id.nome_usuario)
+                        val valorHeader = headerView.findViewById<TextView>(R.id.valor_total)
+
                         nomeHeader.text = nome
+                        valorHeader.text = "R$ $valorTotalgasto"
                     }
                 }
         }
