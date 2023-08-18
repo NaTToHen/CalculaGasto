@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.MainActivity
@@ -40,6 +41,13 @@ class MesSelecionadoActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        binding.addGasto.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(this)
+
+            bottomSheetDialog.setContentView(R.layout.fragment_add_bottom_sheet)
+            bottomSheetDialog.show()
         }
     }
 

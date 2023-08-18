@@ -64,24 +64,6 @@ class HomeFragment : Fragment() {
 
         return root
     }
-    /*companion object {
-
-        private val barSet = listOf(
-            "JAN" to 4F,
-            "FEV" to 8F,
-            "MAR" to 2F,
-            "MAI" to 2.3F,
-            "ABR" to 5F,
-            "JUN" to 4F,
-            "JUL" to 4F,
-            "AGO" to 7F,
-            "SET" to 2F,
-            "OUT" to 2.3F,
-            "NOV" to 5F,
-            "DEZ" to 4F
-        )
-        private const val animationDuration = 1000L
-    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -38,7 +38,6 @@ class AdapterMes(val context: Context, val listaMeses: ArrayList<MesesUsuario>):
         holder.valorTotalMes.text = "Total: R$${mes.value.toString()}"
 
         holder.btnEditarMes.setOnClickListener {
-
             val intent = Intent(context, MesSelecionadoActivity::class.java)
             intent.putExtra("mesSelecionado", mes.key)
             context.startActivity(intent)
