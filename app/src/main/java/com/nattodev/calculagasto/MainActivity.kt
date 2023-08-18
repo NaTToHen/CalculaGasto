@@ -41,6 +41,12 @@ class MainActivity : AppCompatActivity() {
             exitDialog()
         }
 
+        binding.appBarMain.logoTopo.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
 
@@ -88,28 +94,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun exitDialog() {
-        // creating custom dialog
         val dialog = Dialog(this@MainActivity)
-        // setting content view to dialog
         dialog.setContentView(R.layout.fragment_desconectar)
 
-        // getting reference of TextView
         val dialogButtonYes = dialog.findViewById(R.id.btn_deslogarConfirm) as Button
         val dialogButtonNo = dialog.findViewById(R.id.btn_deslogarCancelar) as Button
 
-        // click listener for No
-        dialogButtonNo.setOnClickListener { // dismiss the dialog
+        dialogButtonNo.setOnClickListener {
             dialog.dismiss()
         }
-        // click listener for Yes
-        dialogButtonYes.setOnClickListener { // dismiss the dialog and exit the exit
+
+        dialogButtonYes.setOnClickListener {
             dialog.dismiss()
             Firebase.auth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
-        // show the exit dialog
+
         dialog.show()
     }
 }

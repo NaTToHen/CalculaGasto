@@ -20,7 +20,6 @@ class MesesFragment : Fragment() {
     private var _binding: FragmentMesesBinding? = null
     private lateinit var recyclerView : RecyclerView
     private lateinit var mesesArrayList: ArrayList<MesesUsuario>
-    private lateinit var mesesAdapterMes: AdapterMes
     private var db = FirebaseFirestore.getInstance()
     private val userConectado = Firebase.auth.currentUser?.email
 
@@ -43,7 +42,7 @@ class MesesFragment : Fragment() {
 
         mesesArrayList = arrayListOf()
 
-        db.collection("/Usuarios/${userConectado}/GastoMes").get().addOnSuccessListener {
+        db.collection("/Usuarios/${userConectado}/MesesAno").get().addOnSuccessListener {
             if(!it.isEmpty) {
                 for(data in it.documents) {
                     val mes: MesesUsuario? = data.toObject(MesesUsuario::class.java)

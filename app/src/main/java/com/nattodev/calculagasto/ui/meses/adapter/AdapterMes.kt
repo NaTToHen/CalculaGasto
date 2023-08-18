@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.R
-import com.nattodev.calculagasto.ui.meses.MesSelecionadoActivity
+import com.nattodev.calculagasto.ui.meses.gastos.MesSelecionadoActivity
 import com.nattodev.calculagasto.ui.meses.model.MesesUsuario
 
 class AdapterMes(val context: Context, val listaMeses: ArrayList<MesesUsuario>): RecyclerView.Adapter<AdapterMes.MesViewHolder>() {
@@ -35,11 +33,11 @@ class AdapterMes(val context: Context, val listaMeses: ArrayList<MesesUsuario>):
     override fun onBindViewHolder(holder: MesViewHolder, position: Int) {
         val mes: MesesUsuario = listaMeses[position]
         val primeira = mes.key?.first()?.uppercase()
+
         holder.mes.text = "$primeira${mes.key?.substring(1)}"
         holder.valorTotalMes.text = "Total: R$${mes.value.toString()}"
 
         holder.btnEditarMes.setOnClickListener {
-            Toast.makeText(context, "${mes.key}", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(context, MesSelecionadoActivity::class.java)
             intent.putExtra("mesSelecionado", mes.key)

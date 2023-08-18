@@ -108,13 +108,14 @@ class CadastroActivity : AppCompatActivity() {
             "email" to email,
             "valorMaximo" to valorMaximo,
             "senha" to senha,
-            "anoAtual" to ano
+            "anoAtual" to ano,
+            "valorTotal" to 0
         )
 
         val mapMeses = hashMapOf(
             "janeiro" to 0.0f,
             "fevereiro" to 0.0f,
-            "marco" to 0.0f,
+            "março" to 0.0f,
             "abril" to 0.0f,
             "maio" to 0.0f,
             "junho" to 0.0f,
@@ -126,12 +127,19 @@ class CadastroActivity : AppCompatActivity() {
             "dezembro" to 0.0f
         )
 
+        val mapGastos = hashMapOf(
+            "gasto1" to 0.0f
+        )
+
         db.collection("Usuarios").document(email).set(mapUsuarios)
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {
-                    Toast.makeText(applicationContext, "usuario cadastrado", Toast.LENGTH_SHORT).show()
                     for (mes in mapMeses) {
-                        db.collection("/Usuarios/${email}/GastoMes").document(mes.key).set(mes)
+                        db.collection("/Usuarios/${email}/MesesAno").document(mes.key).set(mes)
+                            .addOnCompleteListener {
+                                db.collection("/Usuarios/${email}/MesesAno").document(mes.key)
+                                    .collection("/gastoMes").document("gastoMes").set(mapGastos)
+                            }
                     }
                 } else {
                     Toast.makeText(applicationContext, "Erro ao cadastrar usuario", Toast.LENGTH_SHORT).show()
@@ -141,7 +149,7 @@ class CadastroActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if(user != null) {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

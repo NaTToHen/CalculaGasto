@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/verde</item>
+        <item name="colorSecondaryVariant">@color/verdePoucoClaro</item>
         <item name="colorOnSecondary">@color/padraoTexto</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
@@ -17,6 +17,11 @@
     <style name="Theme.CalculaGasto.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.CalculaGasto.NoActionBarMes">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">false</item>
     </style>
 
     <style name="Theme.CalculaGasto.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

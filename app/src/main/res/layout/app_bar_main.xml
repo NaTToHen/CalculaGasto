@@ -19,6 +19,7 @@
             app:popupTheme="@style/Theme.CalculaGasto.PopupOverlay">
 
             <ImageView
+                android:id="@+id/logoTopo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/logomenu"

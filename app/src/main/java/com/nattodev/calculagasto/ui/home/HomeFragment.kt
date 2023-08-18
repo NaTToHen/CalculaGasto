@@ -34,24 +34,23 @@ class HomeFragment : Fragment() {
 
             mostraDadosUsuario()
 
-            val homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+            val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
             _binding = FragmentHomeBinding.inflate(inflater, container, false)
             val root: View = binding.root
 
         val barSet = mutableListOf<Pair<String,Float>>(
             "JAN" to 0F,
-            "FEV" to 0F,
+            "FEV" to 2F,
             "MAR" to 0F,
-            "MAI" to 0F,
-            "ABR" to 0F,
+            "MAI" to 3F,
+            "ABR" to 6F,
             "JUN" to 0F,
-            "JUL" to 0F,
+            "JUL" to 5F,
             "AGO" to 0F,
-            "SET" to 0F,
+            "SET" to 2F,
             "OUT" to 0F,
-            "NOV" to 0F,
-            "DEZ" to 0F
+            "NOV" to 1F,
+            "DEZ" to 4F
         )
         val animationDuration = 1000L
         /*for(mes in barSet) {
@@ -61,10 +60,6 @@ class HomeFragment : Fragment() {
         binding.apply {
             barChartMeses.animation.duration = animationDuration
             barChartMeses.animate(barSet)
-        }
-
-        binding.btnConfig.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.nav_config)
         }
 
         return root
@@ -106,7 +101,7 @@ class HomeFragment : Fragment() {
                         val nome = documento.result.get("nome").toString()
                         val valorTotal = documento.result.get("valorTotal").toString()
                         binding.nomeUsuario.text = nome
-                        binding.totalGasto.text = "R$ $valorTotal"
+                        binding.totalGasto.text = "Total gasto: R$ $valorTotal"
                     }
                 }
         }
