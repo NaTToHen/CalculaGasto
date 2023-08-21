@@ -1,4 +1,4 @@
-package com.nattodev.calculagasto.loginCadastro
+package com.nattodev.calculagasto.ui.loginCadastro
 
 import android.content.ContentValues.TAG
 import android.content.Intent

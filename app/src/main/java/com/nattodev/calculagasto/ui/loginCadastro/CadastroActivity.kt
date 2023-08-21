@@ -1,4 +1,4 @@
-package com.nattodev.calculagasto.loginCadastro
+package com.nattodev.calculagasto.ui.loginCadastro
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -17,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.databinding.ActivityCadastroBinding
 import java.util.Calendar
-
+import java.util.UUID
 
 class CadastroActivity : AppCompatActivity() {
 
@@ -53,7 +53,7 @@ class CadastroActivity : AppCompatActivity() {
                 || !valorMaximo.isEmpty() || !nome.isEmpty()) {
                 if(senha.length < 6) {
                     val snackbar = Snackbar.make(view, "A senha deve ter mais de 6 caracteres", Snackbar.LENGTH_LONG)
-                    snackbar.setBackgroundTint(Color.RED)
+                    snackbar.setBackgroundTint(Color.YELLOW)
                     snackbar.show()
                 } else {
                     auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(this) { task ->
@@ -128,8 +128,11 @@ class CadastroActivity : AppCompatActivity() {
         )
 
         val mapGastos = hashMapOf(
-            "gasto1" to 0.0f
+            "descricao" to "exemplo",
+            "valor" to 0.0f
         )
+
+        val nomeAleatorio = UUID.randomUUID().toString()
 
         db.collection("Usuarios").document(email).set(mapUsuarios)
             .addOnCompleteListener { task ->
@@ -138,7 +141,7 @@ class CadastroActivity : AppCompatActivity() {
                         db.collection("/Usuarios/${email}/MesesAno").document(mes.key).set(mes)
                             .addOnCompleteListener {
                                 db.collection("/Usuarios/${email}/MesesAno").document(mes.key)
-                                    .collection("/gastoMes").document("gastoMes").set(mapGastos)
+                                    .collection("/gastos").document(nomeAleatorio).set(mapGastos)
                             }
                     }
                 } else {

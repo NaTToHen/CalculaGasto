@@ -11,7 +11,7 @@ import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.databinding.FragmentDesconectarBinding
 import com.nattodev.calculagasto.databinding.FragmentHomeBinding
-import com.nattodev.calculagasto.loginCadastro.LoginActivity
+import com.nattodev.calculagasto.ui.loginCadastro.LoginActivity
 
 class DesconectarFragment : Fragment() {
 

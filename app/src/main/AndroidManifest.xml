@@ -16,10 +16,10 @@
             android:name=".ui.meses.gastos.MesSelecionadoActivity"
             android:exported="false" />
         <activity
-            android:name=".loginCadastro.LoginActivity"
+            android:name=".ui.loginCadastro.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".loginCadastro.CadastroActivity"
+            android:name=".ui.loginCadastro.CadastroActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

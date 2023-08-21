@@ -10,23 +10,32 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.nattodev.calculagasto.AddBottomSheetFragment
 import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.databinding.ActivityMesSelecionadoBinding
 import com.nattodev.calculagasto.databinding.FragmentAddBottomSheetBinding
-import com.nattodev.calculagasto.loginCadastro.LoginActivity
+import com.nattodev.calculagasto.ui.loginCadastro.LoginActivity
+import com.nattodev.calculagasto.ui.meses.model.Gasto
+import com.nattodev.calculagasto.ui.meses.model.MesesUsuario
 import java.text.DecimalFormat
+import java.util.UUID
 
 class MesSelecionadoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMesSelecionadoBinding
     private var db = FirebaseFirestore.getInstance()
     private val userConectado = Firebase.auth.currentUser?.email
+
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var gastoArrayList: ArrayList<Gasto>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +50,12 @@ class MesSelecionadoActivity : AppCompatActivity() {
 
         Toast.makeText(this, "$mesSelecionado", Toast.LENGTH_SHORT).show()
 
+        recyclerView = binding.listaGastosMes
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        recyclerView.setHasFixedSize(true)
+
+        gastoArrayList = arrayListOf()
+
         btnVoltar.setOnClickListener {
             finish()
         }
@@ -53,8 +68,8 @@ class MesSelecionadoActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.addGasto.setOnClickListener {
-            abreBottomDialog()
+        binding.addGasto.setOnClickListener{
+            abreBottomSheet()
         }
     }
 
@@ -77,38 +92,40 @@ class MesSelecionadoActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun abreBottomDialog() {
+    fun abreBottomSheet() {
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.fragment_add_bottom_sheet)
+        dialog.show()
+
         val btnAddGastoBottom = dialog.findViewById<Button>(R.id.btnAddGastoBottom)
 
-        btnAddGastoBottom?.setOnClickListener { view ->
+        btnAddGastoBottom?.setOnClickListener {
+
             val descGasto = dialog.findViewById<EditText>(R.id.nomeGasto)?.text.toString()
             val valorGasto = dialog.findViewById<EditText>(R.id.valorGasto)?.text.toString().toFloat()
-            val decimalFormat = DecimalFormat("#.00")
-            val valorFormatado = decimalFormat.format(valorGasto)
 
-            val mesSelecionado = intent.getStringExtra("mesSelecionado")
+            if(!descGasto.isEmpty() || !valorGasto.toString().isEmpty()) {
+                val decimalFormat = DecimalFormat("#.00")
+                val valorFormatado = decimalFormat.format(valorGasto)
+                val mesSelecionado = intent.getStringExtra("mesSelecionado")
+                val nomeAleatorio = UUID.randomUUID().toString()
 
-            if(descGasto.isEmpty()) {
-                val snackbar = Snackbar.make(view, "preencha todos os campos", Snackbar.LENGTH_LONG)
-                snackbar.setBackgroundTint(Color.RED)
-                snackbar.show()
-            } else {
-                db.document("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastoMes/gastoMes")
-                    .update(mapOf(descGasto to valorFormatado)).addOnCompleteListener {
-                        val snackbar = Snackbar.make(view, "Adicionado com sucesso", Snackbar.LENGTH_LONG)
-                        snackbar.setBackgroundTint(Color.GREEN)
-                        snackbar.show()
+                val dadosDocumento = hashMapOf(
+                    "nome" to descGasto,
+                    "valor" to valorFormatado
+                )
 
-                        dialog.dismiss()
-                    }.addOnFailureListener {
-                        val snackbar = Snackbar.make(view, "Algo deu errado", Snackbar.LENGTH_LONG)
-                        snackbar.setBackgroundTint(Color.RED)
-                        snackbar.show()
+                db.collection("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos")
+                    .document(nomeAleatorio).set(dadosDocumento).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            dialog.dismiss()
+                        } else {
+                            Toast.makeText(this, "algo deu errado", Toast.LENGTH_SHORT).show()
+                        }
                     }
+            } else {
+                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             }
         }
-        dialog.show()
     }
 }

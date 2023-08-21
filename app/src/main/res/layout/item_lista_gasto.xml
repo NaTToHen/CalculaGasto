@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnEditarMes"
+        android:id="@+id/btnExcluirGasto"
         android:layout_width="22dp"
         android:layout_height="16dp"
         android:backgroundTint="#FF0000"

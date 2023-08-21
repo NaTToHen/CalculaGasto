@@ -55,7 +55,7 @@ class MesesFragment : Fragment() {
                 recyclerView.adapter = AdapterMes(requireContext(), mesesArrayList)
             }
         }.addOnFailureListener {
-            Toast.makeText(requireContext(), "teste", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "algo deu errado", Toast.LENGTH_SHORT).show()
         }
 
         return root

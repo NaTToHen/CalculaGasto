@@ -19,7 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.databinding.ActivityMainBinding
-import com.nattodev.calculagasto.loginCadastro.LoginActivity
+import com.nattodev.calculagasto.ui.loginCadastro.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 

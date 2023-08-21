@@ -1,4 +1,4 @@
-package com.nattodev.calculagasto.ui.meses
+package com.nattodev.calculagasto.ui.meses.viewHolder
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
