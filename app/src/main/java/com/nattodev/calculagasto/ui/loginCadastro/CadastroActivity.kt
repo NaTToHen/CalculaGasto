@@ -43,8 +43,8 @@ class CadastroActivity : AppCompatActivity() {
             val nome = binding.editNome.text.toString()
             val email = binding.editEmail.text.toString().trim()
             val valorMaximo = binding.editValorMaximo.text.toString()
-            val senha = binding.editSenha.text.toString().trim()
-            val confirm = binding.editConfirmaSenha.text.toString().trim()
+            val senha = binding.editSenha.text.toString()
+            val confirm = binding.editConfirmaSenha.text.toString()
 
             val calendario = Calendar.getInstance()
             val ano = calendario.get(Calendar.YEAR).toString()
@@ -129,7 +129,7 @@ class CadastroActivity : AppCompatActivity() {
 
         val mapGastos = hashMapOf(
             "descricao" to "exemplo",
-            "valor" to 0.0f
+            "valor" to "0"
         )
 
         val nomeAleatorio = UUID.randomUUID().toString()

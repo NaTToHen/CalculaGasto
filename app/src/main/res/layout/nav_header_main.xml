@@ -1,40 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:gravity="center"
+    android:layout_height="wrap_content"
     android:paddingHorizontal="20dp"
-    android:paddingTop="60dp"
     android:id="@+id/header_nav"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:id="@+id/nome_usuario"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/passion_one"
-        android:text="@string/nav_header_title"
-        android:textColor="#525252"
-        android:textSize="30sp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingVertical="40dp"
+        app:layout_constraintBottom_toTopOf="@id/view">
 
-    <TextView
-        android:id="@+id/valor_total"
-        android:layout_marginTop="10dp"
-        android:textColor="#AAAAAA"
-        android:textSize="20sp"
-        android:fontFamily="@font/passion_one"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle"
-        android:layout_below="@id/nome_usuario"
-        />
+        <TextView
+            android:id="@+id/nome_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/passion_one"
+            android:text="@string/nav_header_title"
+            android:textColor="#525252"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/valor_total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nome_usuario"
+            android:fontFamily="@font/passion_one"
+            android:text="@string/nav_header_subtitle"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nome_usuario" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/verde"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

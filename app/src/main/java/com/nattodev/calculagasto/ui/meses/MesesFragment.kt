@@ -23,8 +23,6 @@ class MesesFragment : Fragment() {
     private var db = FirebaseFirestore.getInstance()
     private val userConectado = Firebase.auth.currentUser?.email
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(

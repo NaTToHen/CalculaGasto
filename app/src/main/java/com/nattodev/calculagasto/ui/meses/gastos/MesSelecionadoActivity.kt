@@ -2,10 +2,8 @@ package com.nattodev.calculagasto.ui.meses.gastos
 
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,16 +11,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import com.nattodev.calculagasto.AddBottomSheetFragment
 import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.databinding.ActivityMesSelecionadoBinding
-import com.nattodev.calculagasto.databinding.FragmentAddBottomSheetBinding
 import com.nattodev.calculagasto.ui.loginCadastro.LoginActivity
+import com.nattodev.calculagasto.ui.meses.adapter.AdapterGasto
+import com.nattodev.calculagasto.ui.meses.adapter.AdapterMes
 import com.nattodev.calculagasto.ui.meses.model.Gasto
 import com.nattodev.calculagasto.ui.meses.model.MesesUsuario
 import java.text.DecimalFormat
@@ -33,9 +30,8 @@ class MesSelecionadoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMesSelecionadoBinding
     private var db = FirebaseFirestore.getInstance()
     private val userConectado = Firebase.auth.currentUser?.email
-
     private lateinit var recyclerView : RecyclerView
-    private lateinit var gastoArrayList: ArrayList<Gasto>
+    private lateinit var mutableListGastos: ArrayList<Gasto>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +45,6 @@ class MesSelecionadoActivity : AppCompatActivity() {
         val mesSelecionado = intent.getStringExtra("mesSelecionado")
 
         Toast.makeText(this, "$mesSelecionado", Toast.LENGTH_SHORT).show()
-
-        recyclerView = binding.listaGastosMes
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        recyclerView.setHasFixedSize(true)
-
-        gastoArrayList = arrayListOf()
 
         btnVoltar.setOnClickListener {
             finish()
@@ -71,6 +61,27 @@ class MesSelecionadoActivity : AppCompatActivity() {
         binding.addGasto.setOnClickListener{
             abreBottomSheet()
         }
+
+        recyclerView = findViewById(R.id.listaGastosMes)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+
+        db.collection("/Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos").get()
+            .addOnSuccessListener {
+                if(!it.isEmpty) {
+                    for(data in it.documents) {
+                        val mes: Gasto? = data.toObject(Gasto::class.java)
+                        if(mes != null) {
+                            mutableListGastos.add(mes)
+                        } else {
+                            Toast.makeText(this, "não encontrado", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    recyclerView.adapter = AdapterGasto(this, mutableListGastos)
+                }
+            }.addOnFailureListener {
+                Toast.makeText(this, "algo deu errado", Toast.LENGTH_SHORT).show()
+            }
     }
 
     fun exitDialog() {
@@ -111,7 +122,7 @@ class MesSelecionadoActivity : AppCompatActivity() {
                 val nomeAleatorio = UUID.randomUUID().toString()
 
                 val dadosDocumento = hashMapOf(
-                    "nome" to descGasto,
+                    "descricao" to descGasto,
                     "valor" to valorFormatado
                 )
 
