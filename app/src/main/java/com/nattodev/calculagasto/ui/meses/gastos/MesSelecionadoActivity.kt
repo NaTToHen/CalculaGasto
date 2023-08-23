@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.MainActivity
@@ -36,6 +37,7 @@ class MesSelecionadoActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var itemList: MutableList<Gasto>
     private lateinit var query: Query
+    private lateinit var adapter: GastoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +56,6 @@ class MesSelecionadoActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         itemList = mutableListOf()
-
         carregarDadosDoFirestore()
 
         btnVoltar.setOnClickListener {
@@ -71,6 +72,8 @@ class MesSelecionadoActivity : AppCompatActivity() {
         binding.addGasto.setOnClickListener{
             abreBottomSheet()
         }
+        binding.valorTotalMesSelecionado.text = "R$ 4000,00"
+        binding.mesSelecionadoTv.text = mesSelecionado
     }
 
     fun exitDialog() {
@@ -106,12 +109,9 @@ class MesSelecionadoActivity : AppCompatActivity() {
 
             val descGasto = dialog.findViewById<EditText>(R.id.nomeGasto)?.text.toString()
             val valorGasto = dialog.findViewById<EditText>(R.id.valorGasto)?.text.toString().toFloat()
-
-            if(!descGasto.isEmpty() || !valorGasto.toString().isEmpty()) {
-                val decimalFormat = DecimalFormat("#.00")
-                val valorFormatado = decimalFormat.format(valorGasto)
-                val mesSelecionado = intent.getStringExtra("mesSelecionado")
-                //val nomeAleatorio = UUID.randomUUID().toString()
+            val decimalFormat = DecimalFormat("#.00")
+            val valorFormatado = decimalFormat.format(valorGasto)
+            val mesSelecionado = intent.getStringExtra("mesSelecionado")
 
                 val dadosDocumento = hashMapOf(
                     "descricao" to descGasto,
@@ -122,13 +122,12 @@ class MesSelecionadoActivity : AppCompatActivity() {
                     .document(descGasto).set(dadosDocumento).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             dialog.dismiss()
-                        } else {
+                            carregarDadosDoFirestore()
+                        } else if(task.isCanceled) {
                             Toast.makeText(this, "algo deu errado", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
                         }
                     }
-            } else {
-                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
-            }
         }
     }
     fun carregarDadosDoFirestore() {
@@ -138,6 +137,8 @@ class MesSelecionadoActivity : AppCompatActivity() {
         db.collection("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos").get()
             .addOnSuccessListener {
                 if(!it.isEmpty) {
+                    itemList.clear()
+                    var i = 0
                     for(data in it.documents) {
                         val gasto: Gasto? = data.toObject(Gasto::class.java)
                         if(gasto != null) {
