@@ -16,6 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.databinding.ActivityCadastroBinding
+import com.nattodev.calculagasto.toastErro
+import com.nattodev.calculagasto.toastSucesso
 import java.util.Calendar
 import java.util.UUID
 
@@ -52,9 +54,7 @@ class CadastroActivity : AppCompatActivity() {
             if(senha === confirm && !email.isEmpty() || !senha.isEmpty() || !confirm.isEmpty()
                 || !valorMaximo.isEmpty() || !nome.isEmpty()) {
                 if(senha.length < 6) {
-                    val snackbar = Snackbar.make(view, "A senha deve ter mais de 6 caracteres", Snackbar.LENGTH_LONG)
-                    snackbar.setBackgroundTint(Color.YELLOW)
-                    snackbar.show()
+                    toastErro("A senha deve ter mais de 6 caracteres", this)
                 } else {
                     auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
@@ -63,17 +63,11 @@ class CadastroActivity : AppCompatActivity() {
                                 val user = auth.currentUser
 
                                 salvaUsuario(nome, email, valorMaximo, senha, ano)
-
-                                val snackbar = Snackbar.make(view, "Cadastro realizado com sucesso", Snackbar.LENGTH_LONG)
-                                snackbar.setBackgroundTint(Color.GREEN)
-                                snackbar.show()
                                 updateUI(user)
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                val snackbar = Snackbar.make(view, "preencha os campos corretamente", Snackbar.LENGTH_LONG)
-                                snackbar.setBackgroundTint(Color.RED)
-                                snackbar.show()
+                                toastErro("Preencha todos os campos", this)
 
                                 binding.editSenha.setText("")
                                 binding.editConfirmaSenha.setText("")
@@ -82,10 +76,7 @@ class CadastroActivity : AppCompatActivity() {
                         }
                 }
             } else {
-                val snackbar = Snackbar.make(view, "preencha todos os campos", Snackbar.LENGTH_LONG)
-                snackbar.setBackgroundTint(Color.RED)
-                snackbar.show()
-
+                toastErro("Preencha todos os campos", this)
                 binding.editSenha.setText("")
                 binding.editConfirmaSenha.setText("")
             }
@@ -129,10 +120,10 @@ class CadastroActivity : AppCompatActivity() {
 
         val mapGastos = hashMapOf(
             "descricao" to "exemplo",
-            "valor" to "0"
+            "valor" to "0.0"
         )
 
-        val nomeAleatorio = UUID.randomUUID().toString()
+        //val nomeAleatorio = UUID.randomUUID().toString()
 
         db.collection("Usuarios").document(email).set(mapUsuarios)
             .addOnCompleteListener { task ->
@@ -141,11 +132,12 @@ class CadastroActivity : AppCompatActivity() {
                         db.collection("/Usuarios/${email}/MesesAno").document(mes.key).set(mes)
                             .addOnCompleteListener {
                                 db.collection("/Usuarios/${email}/MesesAno").document(mes.key)
-                                    .collection("/gastos").document(nomeAleatorio).set(mapGastos)
+                                    .collection("/gastos").document("exemplo").set(mapGastos)
                             }
                     }
+                    toastSucesso("Cadastrado dom Sucesso", this)
                 } else {
-                    Toast.makeText(applicationContext, "Erro ao cadastrar usuario", Toast.LENGTH_SHORT).show()
+                    toastErro("Erro ao cadastrar usuario", this)
                 }
             }
     }

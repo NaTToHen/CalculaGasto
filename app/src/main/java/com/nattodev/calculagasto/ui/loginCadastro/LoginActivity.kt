@@ -18,6 +18,7 @@ import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.classes.Usuario
 import com.nattodev.calculagasto.databinding.ActivityLoginBinding
+import com.nattodev.calculagasto.toastErro
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,25 +36,18 @@ class LoginActivity : AppCompatActivity() {
             val EmailUsuario = binding.editEmail.text.toString()
             val SenhaUsuario = binding.editSenha.text.toString()
             if(EmailUsuario.isEmpty() || SenhaUsuario.isEmpty()) {
-                val snackbar = Snackbar.make(view, "Preencha os campos", Snackbar.LENGTH_LONG)
-                snackbar.setBackgroundTint(Color.RED)
-                snackbar.show()
+                toastErro("Email ou senha não peenchidos", this)
             } else {
                 auth.signInWithEmailAndPassword(EmailUsuario, SenhaUsuario).addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Log.d(TAG, "signInWithEmail:success")
-
                         val user = auth.currentUser
 
                         updateUI(user)
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
-
-                        val snackbar = Snackbar.make(view, "preencha os campos corretamente", Snackbar.LENGTH_LONG)
-                        snackbar.setBackgroundTint(Color.RED)
-                        snackbar.show()
-
+                        toastErro("preencha os campos corretamente", this)
                         updateUI(null)
 
                         binding.editEmail.setText("")
@@ -80,10 +74,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-    }
-
-    private fun signIn(email:String, password:String) {
-
     }
 
     private fun updateUI(user: FirebaseUser?) {

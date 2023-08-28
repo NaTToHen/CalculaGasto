@@ -31,6 +31,7 @@
         android:fontFamily="@font/passion_one"
         android:hint="Descrição"
         android:padding="8dp"
+        android:maxLines="1"
         android:textColor="@color/padraoTexto"
         android:textColorHint="#A8A8A8"
         android:textSize="25sp"

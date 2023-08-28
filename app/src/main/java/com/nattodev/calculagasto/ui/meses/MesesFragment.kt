@@ -12,7 +12,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.databinding.FragmentMesesBinding
+import com.nattodev.calculagasto.formataFloat
 import com.nattodev.calculagasto.ui.meses.adapter.AdapterMes
+import com.nattodev.calculagasto.ui.meses.model.Gasto
 import com.nattodev.calculagasto.ui.meses.model.MesesUsuario
 
 class MesesFragment : Fragment() {
@@ -55,7 +57,6 @@ class MesesFragment : Fragment() {
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "algo deu errado", Toast.LENGTH_SHORT).show()
         }
-
         return root
     }
 

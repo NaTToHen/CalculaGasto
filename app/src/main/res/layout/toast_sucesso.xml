@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:id="@+id/teste"
+    android:paddingVertical="5dp"
+    android:background="@drawable/toast_sucesso"
+    android:layout_marginHorizontal="30dp">
+
+    <ImageView
+        android:id="@+id/logoToast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sucesso_toast_icone"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/textoToastSucesso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/passion_one"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:layout_marginStart="10dp"
+        android:textSize="18sp"
+        android:text="Erro ao cadastrar"
+        android:layout_gravity="center_vertical"
+        />
+
+</LinearLayout>
