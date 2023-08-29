@@ -57,8 +57,6 @@ class MesSelecionadoActivity : AppCompatActivity() {
         val mesSelecionado = intent.getStringExtra("mesSelecionado")
         binding.mesSelecionadoTv.text = mesSelecionado
 
-        Toast.makeText(this, "$mesSelecionado", Toast.LENGTH_SHORT).show()
-
         recyclerView = findViewById(R.id.listaGastosMes)
         recyclerView.layoutManager = LinearLayoutManager(this)
         itemList = mutableListOf()

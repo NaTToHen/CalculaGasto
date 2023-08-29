@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.databinding.FragmentHomeBinding
+import com.nattodev.calculagasto.formataFloat
 import com.nattodev.calculagasto.ui.loginCadastro.LoginActivity
 
 class HomeFragment : Fragment() {
@@ -81,9 +82,9 @@ class HomeFragment : Fragment() {
                 .addOnCompleteListener { documento ->
                     if (documento.isSuccessful) {
                         val nome = documento.result.get("nome").toString()
-                        val valorTotal = documento.result.get("valorTotal").toString()
+                        val valorTotal = documento.result.get("valorTotal")
                         binding.nomeUsuario.text = nome
-                        binding.totalGasto.text = "Total gasto: R$ $valorTotal"
+                        binding.totalGasto.text = "Total gasto: R$ ${formataFloat(valorTotal.toString())}"
                     }
                 }
         }

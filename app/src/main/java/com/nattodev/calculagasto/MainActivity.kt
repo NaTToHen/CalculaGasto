@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                         val valorHeader = headerView.findViewById<TextView>(R.id.valor_total)
 
                         nomeHeader.text = nome
-                        valorHeader.text = "R$ $valorTotalgasto"
+                        valorHeader.text = "R$ ${formataFloat(valorTotalgasto.toString())}"
                     }
                 }
         }
