@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/padraoTexto</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/verde</item>
         <item name="colorSecondaryVariant">@color/verdePoucoClaro</item>
         <item name="colorOnSecondary">@color/padraoTexto</item>
         <!-- Status bar color. -->

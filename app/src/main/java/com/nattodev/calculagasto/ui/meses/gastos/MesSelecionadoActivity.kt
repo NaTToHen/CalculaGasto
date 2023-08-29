@@ -3,38 +3,32 @@ package com.nattodev.calculagasto.ui.meses.gastos
 import GastoAdapter
 import android.app.Dialog
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.R
+import com.nattodev.calculagasto.classes.loadingDialog
 import com.nattodev.calculagasto.databinding.ActivityMesSelecionadoBinding
-import com.nattodev.calculagasto.databinding.FragmentAddBottomSheetBinding
 import com.nattodev.calculagasto.formataFloat
+import com.nattodev.calculagasto.formataNumeroGrande
 import com.nattodev.calculagasto.toastErro
 import com.nattodev.calculagasto.toastSucesso
 import com.nattodev.calculagasto.ui.loginCadastro.LoginActivity
+import com.nattodev.calculagasto.ui.meses.MesesFragment
 import com.nattodev.calculagasto.ui.meses.model.Gasto
-import java.text.DecimalFormat
 
 class MesSelecionadoActivity : AppCompatActivity() {
 
@@ -44,12 +38,15 @@ class MesSelecionadoActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var itemList: MutableList<Gasto>
     val valoresArray = mutableListOf<Float>()
+    lateinit var loadingDialog: loadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMesSelecionadoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+        loadingDialog = loadingDialog(this)
+        loadingDialog.show()
 
         val btnVoltar = findViewById<ImageView>(R.id.btnVoltar)
         val logoTopo = findViewById<ImageView>(R.id.logoTopo)
@@ -62,20 +59,24 @@ class MesSelecionadoActivity : AppCompatActivity() {
         itemList = mutableListOf()
         carregarDadosDoFirestore()
 
+        val updateVoltar = MesesFragment()
+
         //botões do support bar
         btnVoltar.setOnClickListener {
+            //updateVoltar.updateValorTotal()
             finish()
         }
         btnSair.setOnClickListener {
             exitDialog()
         }
         logoTopo.setOnClickListener {
+            //updateVoltar.updateValorTotal()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        binding.addGasto.setOnClickListener{
+        binding.addGasto.setOnClickListener {
             abreBottomSheet()
         }
     }
@@ -151,8 +152,8 @@ class MesSelecionadoActivity : AppCompatActivity() {
         db.collection("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos").get()
             .addOnSuccessListener {
                 if(!it.isEmpty) {
+                    valoresArray.clear()
                     itemList.clear()
-
                     for(data in it.documents) {
                         val gasto: Gasto? = data.toObject(Gasto::class.java)
                         val valor = data.getString("valor")
@@ -165,10 +166,11 @@ class MesSelecionadoActivity : AppCompatActivity() {
                         }
                     }
                     val valorTotal = valoresArray.sum()
-                    binding.valorTotalMesSelecionado.text = "R$ ${formataFloat(valorTotal.toString())}"
+                    binding.valorTotalMesSelecionado.text = "R$ ${formataNumeroGrande(valorTotal)}"
                     db.document("Usuarios/${userConectado}/MesesAno/${mesSelecionado}")
                         .update(mapOf("value" to valorTotal))
                     recyclerView.adapter = GastoAdapter(this, itemList, mesSelecionado.toString())
+                    loadingDialog.dismiss()
                 }
             }
             .addOnFailureListener { exception ->

@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
+import com.nattodev.calculagasto.R
+import com.nattodev.calculagasto.classes.loadingDialog
 import com.nattodev.calculagasto.databinding.FragmentMesesBinding
-import com.nattodev.calculagasto.formataFloat
+import com.nattodev.calculagasto.formataNumeroGrande
 import com.nattodev.calculagasto.toastErro
 import com.nattodev.calculagasto.ui.meses.adapter.AdapterMes
-import com.nattodev.calculagasto.ui.meses.model.Gasto
 import com.nattodev.calculagasto.ui.meses.model.MesesUsuario
 
 class MesesFragment : Fragment() {
@@ -27,6 +27,7 @@ class MesesFragment : Fragment() {
     private var db = FirebaseFirestore.getInstance()
     private val userConectado = Firebase.auth.currentUser?.email
     private val gastostotaisList = mutableListOf<Float>()
+    lateinit var loadingDialog: loadingDialog
 
     private val binding get() = _binding!!
 
@@ -38,6 +39,9 @@ class MesesFragment : Fragment() {
 
         _binding = FragmentMesesBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        loadingDialog = loadingDialog(requireContext())
+        loadingDialog.show()
 
         recyclerView = binding.listaMeses
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -67,6 +71,7 @@ class MesesFragment : Fragment() {
                     }
                 }
                 recyclerView.adapter = AdapterMes(requireContext(), mesesArrayList)
+                loadingDialog.dismiss()
             }
         }.addOnFailureListener {
             toastErro("Algo deu errado", requireContext())
@@ -84,9 +89,12 @@ class MesesFragment : Fragment() {
                         }
                     }
                     val valorTotal = gastostotaisList.sum()
-                    binding.valorTotalAno.text = "R$ ${formataFloat(valorTotal.toString())}"
-                    db.document("/Usuarios/${userConectado}/")
+                    db.document("/Usuarios/${userConectado}")
                         .update(mapOf("valorTotal" to valorTotal))
+                    db.document("/Usuarios/${userConectado}").get().addOnCompleteListener { doc ->
+                        val valorT = doc.result.get("valorTotal").toString().toFloat()
+                        binding.valorTotalAno.text = "Total   R\$ ${formataNumeroGrande(valorT)}"
+                    }
                 }
             }
     }

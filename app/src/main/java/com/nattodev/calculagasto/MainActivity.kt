@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.nattodev.calculagasto.classes.loadingDialog
 import com.nattodev.calculagasto.databinding.ActivityMainBinding
 import com.nattodev.calculagasto.ui.loginCadastro.LoginActivity
 
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val db = Firebase.firestore
+    lateinit var loadingDialog: loadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,13 +83,13 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener { documento ->
                     if (documento.isSuccessful) {
                         val nome = documento.result.get("nome").toString()
-                        val valorTotalgasto = documento.result.get("valorTotal")
+                        val valorTotalgasto = documento.result.get("valorTotal").toString().toFloat()
 
                         val nomeHeader = headerView.findViewById<TextView>(R.id.nome_usuario)
                         val valorHeader = headerView.findViewById<TextView>(R.id.valor_total)
 
                         nomeHeader.text = nome
-                        valorHeader.text = "R$ ${formataFloat(valorTotalgasto.toString())}"
+                        valorHeader.text = "R$ ${formataNumeroGrande(valorTotalgasto)}"
                     }
                 }
         }

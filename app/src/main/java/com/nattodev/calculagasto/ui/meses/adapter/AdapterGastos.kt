@@ -16,6 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.R
+import com.nattodev.calculagasto.toastErro
+import com.nattodev.calculagasto.toastSucesso
 import com.nattodev.calculagasto.ui.meses.gastos.MesSelecionadoActivity
 import com.nattodev.calculagasto.ui.meses.model.Gasto
 
@@ -23,6 +25,7 @@ class GastoAdapter(val context: Context, var listaItens: MutableList<Gasto>, val
 
     val db = FirebaseFirestore.getInstance()
     val userConectado = Firebase.auth.currentUser?.email
+    //lateinit var MesSelecionadoActivity: MesSelecionadoActivity
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val gastoNome = itemView.findViewById<TextView>(R.id.gastoNome)
@@ -40,10 +43,13 @@ class GastoAdapter(val context: Context, var listaItens: MutableList<Gasto>, val
         holder.gastoValor.text = "R$ ${listaItens[position].valor}"
 
         holder.btnExcluir.setOnClickListener {
-            db.document("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos/${listaItens[position].descricao}").delete().addOnSuccessListener {
-                Toast.makeText(context, "Excluido com sucesso", Toast.LENGTH_SHORT).show()
+            db.document("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos/${listaItens[position].descricao}")
+                .delete().addOnSuccessListener {
+                toastSucesso("Deletado com sucesso", context)
+                    val activity = context as? MesSelecionadoActivity
+                    activity?.carregarDadosDoFirestore()
             }.addOnFailureListener {
-                Toast.makeText(context, "Erro ao excluir gasto", Toast.LENGTH_SHORT).show()
+                toastErro("Erro ao excluir gasto", context)
             }
         }
     }
