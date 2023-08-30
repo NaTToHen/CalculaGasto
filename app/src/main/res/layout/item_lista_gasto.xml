@@ -26,8 +26,8 @@
         android:layout_marginEnd="15dp"
         android:fontFamily="@font/passion_one"
         android:text="teste"
-        android:textColor="@color/padraoTexto"
-        android:textSize="27sp"
+        android:textColor="#AAAAAA"
+        android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnExcluirGasto"
         app:layout_constraintTop_toTopOf="parent" />

@@ -7,15 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.collection.LLRBNode
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.nattodev.calculagasto.MainActivity
 import com.nattodev.calculagasto.R
 import com.nattodev.calculagasto.classes.loadingDialog
 import com.nattodev.calculagasto.databinding.FragmentHomeBinding
 import com.nattodev.calculagasto.formataNumeroGrande
 import com.nattodev.calculagasto.toastErro
+import com.nattodev.calculagasto.ui.meses.gastos.MesSelecionadoActivity
 import com.nattodev.calculagasto.ui.meses.model.MesesUsuario
 
 class HomeFragment : Fragment() {
@@ -25,8 +32,7 @@ class HomeFragment : Fragment() {
     lateinit var loadingDialog: loadingDialog
     private val userConectado = Firebase.auth.currentUser?.email
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -79,6 +85,7 @@ class HomeFragment : Fragment() {
         userConectado?.let {
             // Name, email address, and profile photo Url
             val email = it.email
+
 
             db.collection("Usuarios").document(email.toString()).get()
                 .addOnCompleteListener { documento ->

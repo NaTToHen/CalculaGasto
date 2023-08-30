@@ -13,6 +13,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,6 +43,7 @@ class MesSelecionadoActivity : AppCompatActivity() {
     val valoresArray = mutableListOf<Float>()
     lateinit var loadingDialog: loadingDialog
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMesSelecionadoBinding.inflate(layoutInflater)
@@ -58,8 +62,6 @@ class MesSelecionadoActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         itemList = mutableListOf()
         carregarDadosDoFirestore()
-
-        val updateVoltar = MesesFragment()
 
         //botões do support bar
         btnVoltar.setOnClickListener {
@@ -178,5 +180,4 @@ class MesSelecionadoActivity : AppCompatActivity() {
                 Toast.makeText(this, "erro ao carregar dados", Toast.LENGTH_SHORT).show()
             }
     }
-
 }

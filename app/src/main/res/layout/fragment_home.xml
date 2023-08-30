@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.core.widget.NestedScrollView xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/verde"
@@ -12,8 +18,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
-        app:layout_constraintTop_toTopOf="parent">
+        ads:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
+        ads:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/hello"
@@ -24,10 +30,10 @@
             android:text="@string/hello"
             android:textColor="@color/white"
             android:textSize="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
-            app:layout_constraintEnd_toStartOf="@id/nome_usuario"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            ads:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
+            ads:layout_constraintEnd_toStartOf="@id/nome_usuario"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/nome_usuario"
@@ -38,9 +44,9 @@
             android:gravity="center"
             android:textColor="@color/verdeEscuro"
             android:textSize="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
-            app:layout_constraintStart_toEndOf="@+id/hello"
-            app:layout_constraintTop_toTopOf="parent" />
+            ads:layout_constraintBottom_toTopOf="@+id/fundoPrincipal"
+            ads:layout_constraintStart_toEndOf="@+id/hello"
+            ads:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 
@@ -50,10 +56,10 @@
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/totalGasto"
@@ -65,9 +71,9 @@
             android:text="@string/gastosTotais"
             android:textColor="@color/padraoTexto"
             android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent" />
 
         <com.db.williamchart.view.BarChartView
             android:id="@+id/barChartMeses"
@@ -75,15 +81,15 @@
             android:layout_height="170dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="40dp"
-            app:chart_axis="x"
-            app:chart_barsColor="#00C32C"
-            app:chart_barsRadius="4dp"
-            app:chart_labelsColor="@color/padraoTexto"
-            app:chart_labelsSize="10sp"
-            app:chart_spacing="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/totalGasto" />
+            ads:chart_axis="x"
+            ads:chart_barsColor="#00C32C"
+            ads:chart_barsRadius="4dp"
+            ads:chart_labelsColor="@color/padraoTexto"
+            ads:chart_labelsSize="10sp"
+            ads:chart_spacing="8dp"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toBottomOf="@id/totalGasto" />
 
         <Button
             android:id="@+id/btn_mesAtual"
@@ -97,10 +103,10 @@
             android:text="Editar mês atual"
             android:textColor="@color/verdeEscuro"
             android:textSize="20sp"
-            app:cornerRadius="15dp"
-            app:layout_constraintEnd_toStartOf="@+id/btnConfig"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barChartMeses" />
+            ads:cornerRadius="15dp"
+            ads:layout_constraintEnd_toStartOf="@+id/btnConfig"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toBottomOf="@+id/barChartMeses" />
 
         <Button
             android:id="@+id/btnConfig"
@@ -113,10 +119,25 @@
             android:text="Configurações"
             android:textColor="@color/verdeEscuro"
             android:textSize="20sp"
-            app:cornerRadius="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_mesAtual"
-            app:layout_constraintTop_toBottomOf="@+id/barChartMeses" />
+            ads:cornerRadius="15dp"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toEndOf="@+id/btn_mesAtual"
+            ads:layout_constraintTop_toBottomOf="@+id/barChartMeses" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent">
+
+        </com.google.android.gms.ads.AdView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

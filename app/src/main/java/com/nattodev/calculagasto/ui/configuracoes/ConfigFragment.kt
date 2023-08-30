@@ -22,16 +22,12 @@ class ConfigFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val configViewModel =
-            ViewModelProvider(this).get(ConfigViewModel::class.java)
+        val configViewModel = ViewModelProvider(this).get(ConfigViewModel::class.java)
 
         _binding = FragmentConfigBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        configViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+
         return root
     }
 
