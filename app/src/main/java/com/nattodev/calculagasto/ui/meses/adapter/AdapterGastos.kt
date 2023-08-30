@@ -42,14 +42,18 @@ class GastoAdapter(val context: Context, var listaItens: MutableList<Gasto>, val
         holder.gastoNome.text = listaItens[position].descricao
         holder.gastoValor.text = "R$ ${listaItens[position].valor}"
 
-        holder.btnExcluir.setOnClickListener {
-            db.document("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos/${listaItens[position].descricao}")
-                .delete().addOnSuccessListener {
-                toastSucesso("Deletado com sucesso", context)
+            holder.btnExcluir.setOnClickListener {
+                if(listaItens.size == 1) {
+                    toastErro("O mes precisa ter no minimo 1 gasto", context)
+                } else {
+                    db.document("Usuarios/${userConectado}/MesesAno/${mesSelecionado}/gastos/" +
+                        "${listaItens[position].descricao}").delete().addOnSuccessListener {
+                    toastSucesso("Deletado com sucesso", context)
                     val activity = context as? MesSelecionadoActivity
                     activity?.carregarDadosDoFirestore()
-            }.addOnFailureListener {
-                toastErro("Erro ao excluir gasto", context)
+                }.addOnFailureListener {
+                    toastErro("Erro ao excluir gasto", context)
+                }
             }
         }
     }
