@@ -211,13 +211,14 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
+            android:id="@+id/textoPolitica"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:paddingHorizontal="10dp"
-            android:text="Ao efetuar o cadastro você concorda com os Termos de Serviço e reconhece nossa Politica de Privacidade"
+            android:text="@string/link_privacidade"
             android:textColor="@color/black"
             android:textSize="18sp" />
     </LinearLayout>

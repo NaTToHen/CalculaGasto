@@ -98,8 +98,16 @@ class HomeFragment : Fragment() {
                         if(valorTotal > valorMaximo) {
                             binding.totalGasto.setTextColor(Color.RED)
                         }
-                        binding.totalGasto.text = "Total gasto: R$ ${formataNumeroGrande(valorTotal)}"
 
+                        binding.btnConfig.setOnClickListener {
+                            toastErro("Em desenvolvimento", requireContext())
+                        }
+
+                        binding.btnMesAtual.setOnClickListener {
+                            toastErro("Em desenvolvimento", requireContext())
+                        }
+
+                        binding.totalGasto.text = "Total gasto: R$ ${formataNumeroGrande(valorTotal)}"
                         loadingDialog.dismiss()
                     }
                 }

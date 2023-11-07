@@ -7,5 +7,18 @@
     android:background="@color/white"
     tools:context=".ui.configuracoes.ConfigFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Em desenvolvimento"
+        android:gravity="center"
+        android:textColor="@color/padraoTexto"
+        android:fontFamily="@font/passion_one"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     
 </androidx.constraintlayout.widget.ConstraintLayout>

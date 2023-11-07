@@ -27,7 +27,6 @@ class ConfigFragment : Fragment() {
         _binding = FragmentConfigBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         return root
     }
 

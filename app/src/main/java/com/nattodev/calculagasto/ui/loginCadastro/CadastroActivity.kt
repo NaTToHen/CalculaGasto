@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,9 @@ class CadastroActivity : AppCompatActivity() {
         supportActionBar?.hide()
         auth = Firebase.auth
 
+        val textoPolitica = binding.textoPolitica
+        textoPolitica.movementMethod = LinkMovementMethod.getInstance()
+
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -51,29 +55,33 @@ class CadastroActivity : AppCompatActivity() {
             val calendario = Calendar.getInstance()
             val ano = calendario.get(Calendar.YEAR).toString()
 
-            if(senha === confirm && !email.isEmpty() || !senha.isEmpty() || !confirm.isEmpty()
-                || !valorMaximo.isEmpty() || !nome.isEmpty()) {
+            if( !email.isEmpty() || !senha.isEmpty() || !confirm.isEmpty() || !valorMaximo.isEmpty() || !nome.isEmpty()) {
                 if(senha.length < 6) {
                     toastErro("A senha deve ter mais de 6 caracteres", this)
                 } else {
-                    auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success")
-                                val user = auth.currentUser
+                    if(senha == confirm) {
+                        auth.createUserWithEmailAndPassword(email, senha)
+                            .addOnCompleteListener(this) { task ->
+                                if (task.isSuccessful) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "createUserWithEmail:success")
+                                    val user = auth.currentUser
 
-                                salvaUsuario(nome, email, valorMaximo, senha, ano)
-                                updateUI(user)
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                toastErro("Preencha todos os campos", this)
+                                    salvaUsuario(nome, email, valorMaximo, senha, ano)
+                                    updateUI(user)
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                    toastErro("Preencha todos os campos", this)
 
-                                binding.editSenha.setText("")
-                                binding.editConfirmaSenha.setText("")
-                                updateUI(null)
+                                    binding.editSenha.setText("")
+                                    binding.editConfirmaSenha.setText("")
+                                    updateUI(null)
+                                }
                             }
-                        }
+                    } else {
+                        toastErro("As senhas precisam ser iguais", this)
+                    }
                 }
             } else {
                 toastErro("Preencha todos os campos", this)
@@ -123,6 +131,9 @@ class CadastroActivity : AppCompatActivity() {
             "valor" to "0.0"
         )
 
+        val calendar = Calendar.getInstance()
+        val ano = calendar.get(Calendar.YEAR)
+
         //val nomeAleatorio = UUID.randomUUID().toString()
 
         db.collection("Usuarios").document(email).set(mapUsuarios)
@@ -131,6 +142,7 @@ class CadastroActivity : AppCompatActivity() {
                     for (mes in mapMeses) {
                         db.collection("/Usuarios/${email}/MesesAno").document(mes.key).set(mes)
                             .addOnCompleteListener {
+                                db.document("/Usuarios/${email}/MesesAno/${mes.key}").update(mapOf("ano" to ano))
                                 db.collection("/Usuarios/${email}/MesesAno").document(mes.key)
                                     .collection("/gastos").document("exemplo").set(mapGastos)
                             }

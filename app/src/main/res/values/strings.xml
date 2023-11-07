@@ -27,4 +27,5 @@
     <string name="desconectarCancelar">Cancelar</string>
     <string name="desconectarSair">Sair</string>
     <string name="tituloMeses">Meses</string>
+    <string name="link_privacidade">Ao efetuar o cadastro você concorda com os <a href="https://calculagasto.com/html/sobre.html">Termos de Serviço</a> e reconhece nossa <a href="https://calculagasto.com/html/sobre.html">Politica de Privacidade</a></string>
 </resources>
